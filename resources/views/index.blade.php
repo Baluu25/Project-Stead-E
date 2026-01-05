@@ -16,7 +16,7 @@
           Your all-in-one fitness partner. Track hydration, exercise, <br/>
           and health metrics together.
         </p>
-        <a href="register.php" class="btn btn-primary btn-start">Start for Free</a>
+        <a href="{{ url('/register') }}" class="btn btn-primary btn-start">Start for Free</a>
       </div>
       <div class="col-lg-6">
         <div class="slideshow-container">
@@ -51,7 +51,7 @@
     </div>
   </main>
 
-  <section id="funkciok" class="functions-section py-5">
+  <section id="functions" class="functions-section py-5">
     <div class="container">
       <h2 class="text-center mb-5 text-white">Functions</h2>
       <div class="row g-4">
@@ -101,7 +101,7 @@
     </div>
   </section>
 
-  <section id="letoltes" class="download-section py-5">
+  <section id="donwload" class="download-section py-5">
     <div class="container">
       <h2 class="text-center mb-5 download-section-title">Download</h2>
       <div class="download-card">
@@ -130,7 +130,7 @@
     </div>
   </section>
 
-  <section id="velemenyek" class="reviews-section py-5">
+  <section id="reviews" class="reviews-section py-5">
     <div class="container">
       <h2 class="text-center mb-5 reviews-section-title">What Our Users Say</h2>
       <div class="row g-4">

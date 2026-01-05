@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="images/logo.png">
+  <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
   <title>Stead-E - Create Account</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/register.js?v=1.0" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  @vite(['resources/js/app.js', 'resources/css/style.css', 'resources/js/register.js'])
 </head>
 <body>
   <div class="background-gradient"></div>
   
   <div class="back-to-home-container">
-    <a href="index.html" class="back-to-home">
+    <a href="{{ url('/') }}" class="back-to-home">
       <span class="back-arrow">←</span> Back to Home
     </a>
   </div>
@@ -40,14 +38,16 @@
           
           <div class="registration-card active" id="step1">
             <div class="text-center mb-2">
-              <a href="index.php" class="logo-link">
-                <img src="images/logo.png" alt="Stead-E" class="registration-logo" loading="lazy">
+              <a href="{{ url('/') }}" class="logo-link">
+                <img src="{{ asset('images/logo.png') }}" alt="Stead-E" class="registration-logo">
               </a>
             </div>
             <h1 class="registration-title">Create Account</h1>
             <p class="registration-subtitle">Start creating habits today</p>
             
             <form id="basicInfoForm">
+              @csrf
+              
               <div class="form-group">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
@@ -65,8 +65,8 @@
               
               <div class="form-group">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Create a password" required>
-                <div class="password-toggle">
+                <div class="password-container">
+                  <input type="password" id="password" name="password" class="form-control" placeholder="Create a password" required>
                   <button type="button" class="btn-toggle-password" id="togglePassword">
                     <span class="eye-icon">👁️</span>
                   </button>
@@ -77,14 +77,14 @@
             </form>
             
             <div class="login-redirect mt-2">
-              <p>Already have an account? <a href="login.php">sign in</a></p>
+              <p>Already have an account? <a href="{{ url('/login') }}">sign in</a></p>
             </div>
           </div>
 
           <div class="registration-card" id="step2">
             <div class="text-center mb-2">
-              <a href="index.php" class="logo-link">
-                <img src="images/logo.png" alt="Stead-E" class="registration-logo" loading="lazy">
+              <a href="{{ url('/') }}" class="logo-link">
+                <img src="{{ asset('images/logo.png') }}" alt="Stead-E" class="registration-logo">
               </a>
             </div>
             <h1 class="registration-title">Tell Us About Yourself</h1>
@@ -125,8 +125,8 @@
 
           <div class="registration-card" id="step3">
             <div class="text-center mb-2">
-              <a href="index.php" class="logo-link">
-                <img src="images/logo.png" alt="Stead-E" class="registration-logo" loading="lazy">
+              <a href="{{ url('/') }}" class="logo-link">
+                <img src="{{ asset('images/logo.png') }}" alt="Stead-E" class="registration-logo">
               </a>
             </div>
             <h1 class="registration-title">Your Weight</h1>
@@ -137,7 +137,6 @@
                 <input type="number" id="weight" name="weight" class="form-control" placeholder="Enter your weight in kg" min="30" max="300" step="0.1" required>
                 <div class="form-text">Please enter your current weight in kilograms</div>
               </div>
-
               <div class="form-buttons">
                 <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
                 <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
@@ -147,8 +146,8 @@
 
           <div class="registration-card" id="step4">
             <div class="text-center mb-2">
-              <a href="index.php" class="logo-link">
-                <img src="images/logo.png" alt="Stead-E" class="registration-logo" loading="lazy">
+              <a href="{{ url('/') }}" class="logo-link">
+                <img src="{{ asset('images/logo.png') }}" alt="Stead-E" class="registration-logo">
               </a>
             </div>
             <h1 class="registration-title">Your Height</h1>
@@ -168,8 +167,8 @@
 
           <div class="registration-card" id="step5">
             <div class="text-center mb-2">
-              <a href="index.php" class="logo-link">
-                <img src="images/logo.png" alt="Stead-E" class="registration-logo" loading="lazy">
+              <a href="{{ url('/') }}" class="logo-link">
+                <img src="{{ asset('images/logo.png') }}" alt="Stead-E" class="registration-logo">
               </a>
             </div>
             <h1 class="registration-title">Your Goals</h1>
@@ -221,14 +220,26 @@
 
           <div class="registration-card" id="step6">
             <div class="text-center mb-2">
-              <a href="index.php" class="logo-link">
-                <img src="images/logo.png" alt="Stead-E" class="registration-logo" loading="lazy">
+              <a href="{{ url('/') }}" class="logo-link">
+                <img src="{{ asset('images/logo.png') }}" alt="Stead-E" class="registration-logo">
               </a>
             </div>
             <h1 class="registration-title">Your Fitness Level</h1>
             <p class="registration-subtitle">Help us create the perfect plan for you</p>
             
-            <form id="preferencesForm" action="controllers/process_register.php" method="POST">
+            <form action="{{ route('register') }}" method="POST" id="finalForm">
+              @csrf
+              
+              <input type="hidden" id="final_name" name="name">
+              <input type="hidden" id="final_username" name="username">
+              <input type="hidden" id="final_email" name="email">
+              <input type="hidden" id="final_password" name="password">
+              <input type="hidden" id="final_gender" name="gender">
+              <input type="hidden" id="final_weight" name="weight">
+              <input type="hidden" id="final_height" name="height">
+              <input type="hidden" id="final_user_goal" name="user_goal">
+              <input type="hidden" id="final_activity_level" name="activity_level">
+              
               <div class="form-group">
                 <label class="form-label">My current activity level</label>
                 <div class="options-grid">
@@ -260,7 +271,7 @@
               </div>
               <div class="form-buttons">
                 <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-                <button type="submit" class="btn btn-primary">Complete Registration</button>
+                <button type="button" class="btn btn-primary" onclick="submitFinalForm()">Complete Registration</button>
               </div>
             </form>
           </div>
@@ -269,5 +280,35 @@
       </div>
     </div>
   </div>
+
+<script>
+function submitFinalForm() {
+    document.getElementById('final_name').value = document.getElementById('name').value;
+    document.getElementById('final_username').value = document.getElementById('username').value;
+    document.getElementById('final_email').value = document.getElementById('email').value;
+    document.getElementById('final_password').value = document.getElementById('password').value;
+    
+    const genderRadio = document.querySelector('input[name="gender"]:checked');
+    if (genderRadio) {
+        document.getElementById('final_gender').value = genderRadio.value;
+    }
+    
+    document.getElementById('final_weight').value = document.getElementById('weight').value;
+    document.getElementById('final_height').value = document.getElementById('height').value;
+    
+    const goalRadio = document.querySelector('input[name="user_goal"]:checked');
+    if (goalRadio) {
+        document.getElementById('final_user_goal').value = goalRadio.value;
+    }
+    
+    const activityRadio = document.querySelector('input[name="activity_level"]:checked');
+    if (activityRadio) {
+        document.getElementById('final_activity_level').value = activityRadio.value;
+    }
+    
+    document.getElementById('finalForm').submit();
+}
+</script>
+
 </body>
 </html>

@@ -3,62 +3,50 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function show()
+    /**
+     * Megjeleníti a regisztrációs űrlapot
+     */
+    public function showRegistrationForm()
     {
         return view('register');
     }
 
+    /**
+     * Feldolgozza a regisztrációs adatokat - EGYSZERŰBB VERZIÓ
+     */
     public function register(Request $request)
     {
-        // A régi process_register.php logika
-        $errors = [];
-        
-        $name = $request->input('name');
-        $username = $request->input('username');
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $gender = $request->input('gender');
-        $weight = $request->input('weight');
-        $height = $request->input('height');
-        $user_goal = $request->input('user_goal');
-        $activity_level = $request->input('activity_level');
-        
-        // Validációk (pontosan ugyanazok)
-        if (empty($name)) $errors[] = "Name is required";
-        if (empty($username)) $errors[] = "Username is required";
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Valid email is required";
-        if (empty($password) || strlen($password) < 6) $errors[] = "Password must be at least 6 characters long";
-        if (empty($gender)) $errors[] = "Gender is required";
-        if ($weight < 30 || $weight > 300) $errors[] = "Valid weight is required (30-300 kg)";
-        if ($height < 100 || $height > 250) $errors[] = "Valid height is required (100-250 cm)";
-        if (empty($user_goal)) $errors[] = "User goal is required";
-        if (empty($activity_level)) $errors[] = "Activity level is required";
-        
-        if (!empty($errors)) {
-            return back()->withErrors(['form' => implode(', ', $errors)]);
-        }
-        
-        // Adatok elmentése session-be (mivel nincs adatbázis)
-        session([
-            'user_data' => [
-                'name' => $name,
-                'username' => $username,
-                'email' => $email,
-                'gender' => $gender,
-                'weight' => $weight,
-                'height' => $height,
-                'user_goal' => $user_goal,
-                'activity_level' => $activity_level
-            ]
+        // 1. EGYSZERŰBB VALIDÁLÁS (kevesebb szabállyal)
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:6',
         ]);
-        
-        // Bejelentkeztetjük a felhasználót
-        session(['logged_in' => true]);
-        
-        return redirect('/registration-success');
+
+        // 2. Ellenőrizd, hogy létezik-e már az email
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
+            return back()->with('error', 'Ez az email már foglalt!');
+        }
+
+        // 3. Új user létrehozása - MINIMÁLIS ADATOKKAL
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // 4. Automatikus bejelentkeztetés - EGYSZERŰ MÓDON
+        Auth::login($user);
+
+        // 5. Átirányítás - ABSZOLÚT ÚTVONALLAL
+        return redirect('/dashboard');
     }
 }

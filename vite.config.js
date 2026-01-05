@@ -1,6 +1,6 @@
+// vite.config.js - ÚJ FÁJL
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     plugins: [
@@ -16,11 +16,12 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        tailwindcss(),
     ],
-    server: {
-        watch: {
-            ignored: ['**/storage/framework/views/**'],
-        },
-    },
+    build: {
+        lib: {
+            entry: 'resources/js/register.js',
+            name: 'Register',
+            fileName: (format) => `register.${format}.js`
+        }
+    }
 });

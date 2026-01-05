@@ -29,11 +29,10 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
                 <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="#functions">Functions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#download">Download</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <a href="{{ url('/login') }}" class="btn btn-primary btn-start">Login</a>
+                        <a href="{{ url('/') }}" class="btn btn-danger btn-start">Logout</a>
                     </li>
                 </ul>
             </div>

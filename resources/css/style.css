@@ -95,12 +95,27 @@ nav.navbar {
   text-decoration: none;
 }
 
+
 .navbar-brand img {
   height: 40px;
   width: 40px;
   border-radius: 12px;
   object-fit: contain;
   margin-right: 10px;
+}
+
+.navbar-brand span {
+  color: #000;
+  -webkit-text-fill-color: #000;
+  transition: color 0.15s ease;
+}
+
+.navbar-brand:hover span,
+.navbar-brand:focus span,
+.navbar-brand:active span {
+  color: #000 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #000 !important;
 }
 
 .navbar-nav {
@@ -123,14 +138,7 @@ nav.navbar {
   -webkit-text-fill-color: initial;
 }
 
-.nav-link:hover,
-.nav-link:focus {
-  color: transparent;
-  background-image: linear-gradient(135deg, #ff2a00, #2a51ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 
 .btn-primary {
   background: linear-gradient(135deg, #25408f, #3c5bbf);
@@ -642,21 +650,45 @@ main {
   color: white;
 }
 
-.registration-container,
-.login-container,
-.forgot-password-container {
+
+.registration-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 0.5rem 0.5rem;
+  padding: 5rem 0.5rem 0.5rem;
   position: relative;
   z-index: 10;
   margin: 0 auto;
   width: 100%;
 }
 
-.registration-card,
+.registration-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: #333;
+  width: 100%;
+  max-width: 600px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 0 auto;
+  transform: translateZ(0);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  position: absolute;
+  display: none;
+}
+
+.registration-card.active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+}
+
 .login-card,
 .forgot-password-card {
   background: white;
@@ -672,18 +704,12 @@ main {
   transform: translateZ(0);
 }
 
-.registration-card.active,
-.login-card,
-.forgot-password-step.active {
-  display: block;
-}
-
-.registration-card {
-  display: none;
-}
-
 .forgot-password-step {
   display: none;
+}
+
+.forgot-password-step.active {
+  display: block;
 }
 
 .registration-logo,
@@ -1009,6 +1035,7 @@ main {
   font-weight: bold;
 }
 
+
 .progress-container {
   position: fixed;
   top: 1rem;
@@ -1169,6 +1196,57 @@ main {
   font-weight: 500;
 }
 
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+
+.registration-container .row .col-12 {
+  position: relative;
+  min-height: 500px;
+}
+
 @media (max-width: 1199px) {
   .download-image-container {
     height: 105%;
@@ -1268,6 +1346,10 @@ main {
     justify-content: flex-start;
     margin-top: 1rem;
   }
+  
+  .progress-container {
+    width: 350px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1329,10 +1411,8 @@ main {
     height: 45px;
   }
 
-  .registration-container,
-  .login-container,
-  .forgot-password-container {
-    padding: 3rem 0.25rem 0.25rem;
+  .registration-container {
+    padding: 4rem 0.25rem 0.25rem;
   }
   
   .registration-card,
@@ -1348,7 +1428,7 @@ main {
   }
   
   .progress-container {
-    width: 350px;
+    width: 320px;
   }
   
   .options-grid {
@@ -1516,7 +1596,7 @@ main {
   }
   
   .progress-container {
-    width: 320px;
+    width: 280px;
   }
   
   .step {
@@ -1555,4 +1635,313 @@ main {
   .col-12.col-sm-10.col-md-8.col-lg-6.col-xl-5 {
     padding: 0 0.25rem;
   }
+}
+
+.dashboard-container {
+    min-height: calc(100vh - 140px);
+    padding: 0 2rem 2rem 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.dashboard-layout {
+    display: flex;
+    gap: 2rem;
+    min-height: 600px;
+    margin-top: -2rem;
+}
+
+.dashboard-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: none;
+    border-left: none;
+    padding: 2rem 0 2rem 0;
+    height: calc(100vh - 120px);
+    position: sticky;
+    top: 80px;
+    margin-left: -2rem;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-sidebar .sidebar-header {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+}
+
+.dashboard-sidebar .sidebar-header h3 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.dashboard-sidebar .nav-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard-sidebar .nav-item {
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-sidebar .nav-item a {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    position: relative;
+}
+
+
+.dashboard-sidebar .nav-item a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+
+.dashboard-sidebar .nav-item.active a {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-left-color: white;
+}
+
+.dashboard-sidebar .nav-item.active a::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: white;
+    border-radius: 3px 0 0 3px;
+}
+
+.dashboard-sidebar .nav-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+.dashboard-main {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 20px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: none;
+    padding: 2.5rem;
+    margin-right: -2rem;
+    min-height: calc(100vh - 160px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-main .dashboard-header {
+    margin-bottom: 3rem;
+}
+
+.dashboard-main .dashboard-header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+    color: white;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-main .dashboard-header .motivation-text {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+
+.dashboard-main .daily-goals h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: white;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 1rem;
+}
+
+.dashboard-main .goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.dashboard-main .goal-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-main .goal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-main .goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.dashboard-main .goal-header h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin: 0;
+}
+
+.dashboard-main .goal-progress {
+    font-weight: 700;
+    color: #27ae60;
+    font-size: 1.3rem;
+    background: rgba(39, 174, 96, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+}
+
+.dashboard-main .progress-container {
+    width: 100%;
+    height: 12px;
+    background: rgba(236, 240, 241, 0.5);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.dashboard-main .progress-bar {
+    height: 100%;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    border-radius: 6px;
+    transition: width 0.5s ease;
+}
+
+.dashboard-main .goal-motivation {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .dashboard-container {
+        padding: 0 1.5rem 1.5rem;
+    }
+    
+    .dashboard-sidebar {
+        width: 240px;
+        margin-left: -1.5rem;
+    }
+    
+    .dashboard-main {
+        margin-right: -1.5rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .dashboard-layout {
+        flex-direction: column;
+        margin-top: 0;
+    }
+    
+    .dashboard-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0 0 20px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: none;
+        margin-bottom: 1rem;
+        padding: 1.5rem 0;
+    }
+    
+    .dashboard-main {
+        margin-right: 0;
+        border-radius: 0 0 20px 20px;
+    }
+    
+    .dashboard-sidebar .nav-items {
+        display: flex;
+        justify-content: space-around;
+        padding: 0 1rem;
+    }
+    
+    .dashboard-sidebar .nav-item a {
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        padding: 0.8rem 1rem;
+        text-align: center;
+    }
+    
+    .dashboard-sidebar .nav-item.active a {
+        border-left: none;
+        border-bottom-color: white;
+    }
+    
+    .dashboard-sidebar .nav-item.active a::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 0 1rem 1rem;
+        min-height: calc(100vh - 120px);
+    }
+    
+    .dashboard-main {
+        padding: 1.5rem;
+        min-height: calc(100vh - 200px);
+    }
+    
+    .dashboard-main .dashboard-header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .dashboard-main .dashboard-header .motivation-text {
+        font-size: 1.1rem;
+    }
+    
+    .dashboard-sidebar .nav-items {
+        flex-direction: column;
+        padding: 0;
+    }
+    
+    .dashboard-sidebar .nav-item a {
+        text-align: left;
+        padding-left: 1.5rem;
+        border-bottom: none;
+        border-left: 4px solid transparent;
+    }
+    
+    .dashboard-sidebar .nav-item.active a {
+        border-left-color: white;
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-main .dashboard-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .dashboard-sidebar .nav-text {
+        font-size: 1rem;
+    }
 }

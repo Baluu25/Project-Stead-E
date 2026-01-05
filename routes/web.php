@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
-// Splash Screen (First thing users see)
+// Splash Screen
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
@@ -14,7 +14,7 @@ Route::get('/', function () {
     return redirect()->route('welcome');
 });
 
-// Main Home Page (after splash)
+// Main Home Page
 Route::get('/home', function () {
     return view('index');
 })->name('home');
@@ -24,24 +24,16 @@ Route::get('/index', function () {
     return view('index');
 });
 
-// Login Routes
-Route::get('/login', [LoginController::class, 'show'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+/// Regisztrációs útvonalak
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
-// Register Routes
-Route::get('/register', [RegisterController::class, 'show'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+// Bejelentkezési útvonalak
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Forgot Password
-Route::get('/forgot-password', function () {
-    return view('auth.forgot-password');
-})->name('password.request');
-
-// Registration Success
-Route::get('/registration-success', function () {
-    if (!session()->has('user_data')) {
-        return redirect()->route('register');
-    }
-    return view('auth.registration-success', ['userData' => session('user_data')]);
-})->name('registration.success');
+// Védett oldal (csak bejelentkezett felhasználóknak)
+Route::get('/dashboard', function () {
+    return view('dashboard'); // Ezt később hozod létre
+});
