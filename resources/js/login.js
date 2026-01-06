@@ -1,4 +1,4 @@
-// Login functionality
+// Login
 document.addEventListener('DOMContentLoaded', function() {
     initializeLoginForm();
     initializePasswordToggle();
@@ -13,16 +13,10 @@ function initializeLoginForm() {
             e.preventDefault();
             
             if (validateLoginForm()) {
-                // Show loading state
                 const submitBtn = this.querySelector('button[type="submit"]');
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Signing In...';
                 submitBtn.disabled = true;
-                
-                // Simulate API call delay
-                setTimeout(() => {
-                    this.submit();
-                }, 1000);
             }
         });
     }
@@ -36,9 +30,9 @@ function validateLoginForm() {
     // Reset previous errors
     resetValidationStyles();
     
-    // Validate email/username
+    // Validate email
     if (!email.value.trim()) {
-        showFieldError(email, 'Email or username is required');
+        showFieldError(email, 'Email is required');
         isValid = false;
     }
     
@@ -57,14 +51,13 @@ function validateLoginForm() {
 function showFieldError(field, message) {
     field.style.borderColor = '#dc3545';
     field.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
-    
-    // Remove existing error message
+
     const existingError = field.parentNode.querySelector('.field-error');
     if (existingError) {
         existingError.remove();
     }
     
-    // Add error message
+    // Error message
     const errorDiv = document.createElement('div');
     errorDiv.className = 'field-error';
     errorDiv.style.color = '#dc3545';
@@ -74,7 +67,7 @@ function showFieldError(field, message) {
     
     field.parentNode.appendChild(errorDiv);
     
-    // Add shake animation
+    // Animation
     field.classList.add('shake');
     setTimeout(() => {
         field.classList.remove('shake');
@@ -101,8 +94,7 @@ function initializePasswordToggle() {
         toggleBtn.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            
-            // Update eye icon
+        
             const eyeIcon = this.querySelector('.eye-icon');
             if (type === 'text') {
                 eyeIcon.textContent = '🙈';
@@ -110,7 +102,6 @@ function initializePasswordToggle() {
                 eyeIcon.textContent = '👁️';
             }
             
-            // Add animation
             this.style.transform = 'scale(1.2)';
             setTimeout(() => {
                 this.style.transform = '';
@@ -204,6 +195,3 @@ function handleRememberMe() {
         }
     }
 }
-
-// Initialize remember me functionality
-handleRememberMe();

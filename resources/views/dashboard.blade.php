@@ -26,14 +26,24 @@
                             <span class="nav-text">Explore</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <span class="nav-text">Goals</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <span class="nav-text">Challenges</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </aside>
 
         <main class="dashboard-main">
             <header class="dashboard-header">
-                <h1>Szia, {{ Auth::user()->name ?? 'Felhasználó' }}!</h1>
-                <p class="motivation-text">Kövesd a céljaidat és maradj motivált!</p>
+                <h1>Welcome, {{ Auth::user()->username ?? 'Felhasználó' }}!</h1>
+                <p class="motivation-text">Every step counts. Stay consistent!</p>
             </header>
         </main>
     </div>

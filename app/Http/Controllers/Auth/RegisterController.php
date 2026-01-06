@@ -25,6 +25,7 @@ class RegisterController extends Controller
     {
         // 1. EGYSZERŰBB VALIDÁLÁS (kevesebb szabállyal)
         $validated = $request->validate([
+            'username' => 'required',
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6',
@@ -39,6 +40,7 @@ class RegisterController extends Controller
         // 3. Új user létrehozása - MINIMÁLIS ADATOKKAL
         $user = new User();
         $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();

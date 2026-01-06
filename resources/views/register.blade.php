@@ -45,9 +45,7 @@
             <h1 class="registration-title">Create Account</h1>
             <p class="registration-subtitle">Start creating habits today</p>
             
-            <form id="basicInfoForm">
-              @csrf
-              
+            <form id="basicInfoForm">       
               <div class="form-group">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>

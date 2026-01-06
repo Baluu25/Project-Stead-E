@@ -65,19 +65,12 @@
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" id="password" name="password" class="form-control" required>
                             </div>
-
-                            <div class="form-options">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label" for="remember">Remember me</label>
-                                </div>
-                            </div>
-                            
                             <button type="submit" class="btn btn-primary mt-3">Sign In</button>
                         </form>
                         
                         <div class="register-redirect mt-4">
                             <p>Don't have an account? <a href="{{ url('/register') }}">Create account</a></p>
+                             <p>Forgot password? <a href="{{ url('/forgot-password') }}">Reset password</a></p>
                         </div>
                     </div>
                 </div>

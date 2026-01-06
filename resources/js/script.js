@@ -1,16 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Slideshow functionality
+  // Slideshow
   const slides = document.querySelectorAll('.slide');
   const indicators = document.querySelectorAll('.indicator');
   let currentSlide = 0;
-  const slideInterval = 5000; // 5 másodperces váltás
+  const slideInterval = 5000;
   let slideTimer;
   
-  // Kezdeti beállítás
   showSlide(currentSlide);
   startSlideShow();
   
-  // Indikátor kattintás
   indicators.forEach(indicator => {
     indicator.addEventListener('click', function() {
       const index = parseInt(this.getAttribute('data-index'));
@@ -19,36 +17,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Slide megjelenítése
   function showSlide(index) {
-    // Elrejtjük az összes slide-ot
     slides.forEach(slide => {
       slide.classList.remove('active');
     });
     
-    // Elrejtjük az összes indikátort
     indicators.forEach(indicator => {
       indicator.classList.remove('active');
     });
     
-    // Megjelenítjük a kiválasztott slide-ot
+
     slides[index].classList.add('active');
     indicators[index].classList.add('active');
     currentSlide = index;
   }
   
-  // Következő slide
+
   function nextSlide() {
     currentSlide = (currentSlide + 1) % slides.length;
     showSlide(currentSlide);
   }
   
-  // Slideshow indítása
+
   function startSlideShow() {
     slideTimer = setInterval(nextSlide, slideInterval);
   }
-  
-  // Slideshow újraindítása
+
   function resetSlideShow() {
     clearInterval(slideTimer);
     startSlideShow();
@@ -71,8 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Reviews section interaction
-  // Add animation to review cards when they come into view
   const reviewCards = document.querySelectorAll('.review-card');
   
   const observerOptions = {
@@ -89,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }, observerOptions);
   
-  // Set initial state for animation
+
   reviewCards.forEach(card => {
     card.style.opacity = '0';
     card.style.transform = 'translateY(20px)';
@@ -97,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(card);
   });
   
-  // Add click effect to review cards
+
   reviewCards.forEach(card => {
     card.addEventListener('click', function() {
       this.style.transform = 'scale(0.98)';
