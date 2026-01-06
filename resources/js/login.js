@@ -168,30 +168,3 @@ window.addEventListener('load', function() {
         emailField.focus();
     }
 });
-
-// Remember me functionality
-function handleRememberMe() {
-    const rememberMe = document.getElementById('rememberMe');
-    const emailField = document.getElementById('email');
-    
-    if (rememberMe && emailField) {
-        // Check if we have saved credentials
-        const savedEmail = localStorage.getItem('rememberedEmail');
-        if (savedEmail) {
-            emailField.value = savedEmail;
-            rememberMe.checked = true;
-        }
-        
-        // Save credentials when form is submitted
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', function() {
-                if (rememberMe.checked) {
-                    localStorage.setItem('rememberedEmail', emailField.value);
-                } else {
-                    localStorage.removeItem('rememberedEmail');
-                }
-            });
-        }
-    }
-}

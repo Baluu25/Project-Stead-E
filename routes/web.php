@@ -24,16 +24,16 @@ Route::get('/index', function () {
     return view('index');
 });
 
-/// Regisztrációs útvonalak
+/// Registration
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
-// Bejelentkezési útvonalak
+// Login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Védett oldal (csak bejelentkezett felhasználóknak)
+// Protected Dashboard
 Route::get('/dashboard', function () {
-    return view('dashboard'); // Ezt később hozod létre
+    return view('dashboard'); 
 });
